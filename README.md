@@ -1,0 +1,1 @@
+# npm-auto-publish-test
