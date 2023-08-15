@@ -1,0 +1,36 @@
+name: Publish NPM
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VERSION: 16.x
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: install rush
+        run: npm install -g @microsoft/rush
+      - name: Install dependencies
+        run: rush update
+      - name: rush Build
+        run: rush rebuild
+      - name: Publishing mono repo 1
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          working-directory: ./packages/npm-auto-publish-test-mono-repo-1
+      - name: Publishing mono repo 2
+        uses: JS-DevTools/npm-publish@v2
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          working-directory: ./packages/npm-auto-publish-test-mono-repo-2
