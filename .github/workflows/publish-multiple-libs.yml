@@ -9,7 +9,7 @@ env:
   NODE_VERSION: 16.x
 
 jobs:
-  prepare:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,9 +28,9 @@ jobs:
         uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          working-directory: ./packages/npm-auto-publish-test-mono-repo-1
+          package: ./packages/npm-auto-publish-test-mono-repo-1
       - name: Publishing mono repo 2
         uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.NPM_TOKEN }}
-          working-directory: ./packages/npm-auto-publish-test-mono-repo-2
+          package: ./packages/npm-auto-publish-test-mono-repo-2
