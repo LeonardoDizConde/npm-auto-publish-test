@@ -18,15 +18,19 @@ on:
         description: 'Environment to run tests against'
         type: environment
         required: true
+      outro:
+        description: 'outro'
 
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
+    environment: $ENVIRONMENT
     steps:
       - run: |
           echo "Log level: $LEVEL"
           echo "Tags: $TAGS"
           echo "Environment: $ENVIRONMENT"
+          echo "OUTRO: $OUTRO"
         env:
           LEVEL: ${{ inputs.logLevel }}
           TAGS: ${{ inputs.tags }}
