@@ -1,4 +1,9 @@
+name: name2
+
 on:
+  push:
+    branches:
+      - t-2
   workflow_dispatch:
     inputs:
       logLevel:
@@ -20,6 +25,7 @@ on:
         required: true
       outro:
         description: 'outro'
+
 
 jobs:
   log-the-inputs:
