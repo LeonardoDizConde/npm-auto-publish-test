@@ -38,14 +38,19 @@ jobs:
       - name: Set output vars
         run: |
           if [[ !steps.publish_mono.outputs.value && !steps.publish_mono_type.outputs.value ]]; then
-            echo "::error::Both packages failed to publish. Did you changed package.json version? Please review and try again."
+            title="NPM release error"
+            echo "::error title=$title::Both packages failed to publish. Did you changed package.json version? Please review and try again."
             exit 1
           elif [[ !steps.publish_mono.outputs.value ]]; then
-            echo "::error file=${"./packages/app-a/package.json"},line=${3},title=${"No changes has been detected"}::Did you changed package.json version?"
-            echo "::warning title=${"A new release was made in app-b"}::The new version {{ steps.publish_mono_type.outputs.version }} was published"
+            title="No changes has been detected"
+            echo "::error title=$title::Did you changed package.json version?"
+            title="A new release was made in app-b"
+            echo "::warning title=$title::The new version {{ steps.publish_mono_type.outputs.version }} was published"
           elif [[ !steps.publish_mono_type.outputs.value ]]; then
-            echo "::error file=${"./packages/app-b/package.json"},line=${3},title=${"No changes has been detected"}::Did you changed package.json version?"
-            echo "::warning title=${"A new release was made in app-a"}::The new version {{ steps.publish_mono.outputs.version }} was published"
+            title="No changes has been detected"
+            echo "::error title=$title::Did you changed package.json version?"
+            title="A new release was made in app-a"
+            echo "::warning title=$title::The new version {{ steps.publish_mono.outputs.version }} was published"
           else
             echo "::warning title=${"A new release was made in app-a"}::The new version {{ steps.publish_mono.outputs.version }} was published"
             echo "::warning title=${"A new release was made in app-b"}::The new version {{ steps.publish_mono_type.outputs.version }} was published"
