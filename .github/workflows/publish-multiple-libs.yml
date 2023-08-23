@@ -37,8 +37,8 @@ jobs:
           package: ./packages/npm-auto-publish-test-mono-repo-2
       - name: Set output vars
         run: |
-          echo "MONO_A={{ !!steps.publish_mono.outputs.value }}" >> "$GITHUB_OUTPUT"
-          echo "MONO_B={{ !!steps.publish_mono_type.outputs.value }}" >> "$GITHUB_OUTPUT"
+          echo "MONO_A={{ steps.publish_mono.outputs.value }}" >> "$GITHUB_OUTPUT"
+          echo "MONO_B={{ steps.publish_mono_type.outputs.value }}" >> "$GITHUB_OUTPUT"
   check-mono:
     name: Test A
     runs-on: ubuntu-latest
