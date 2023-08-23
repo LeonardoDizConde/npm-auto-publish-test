@@ -24,11 +24,33 @@ jobs:
         run: rush rebuild
       - name: Publishing mono repo 1
         uses: JS-DevTools/npm-publish@v2
+        id: publish_mono
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/npm-auto-publish-test-mono-repo-1
       - name: Publishing mono repo 2
         uses: JS-DevTools/npm-publish@v2
+        id: publish_mono_type
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/npm-auto-publish-test-mono-repo-2
+      - name: Check mono-1 Publish
+        continue-on-error: true
+        run: |
+          if [[ !steps.publish_mono.outputs.value ]]; then
+            echo "Publication error. Did you changed package.json version? Please review and try again."
+            exit 1
+          else
+            echo "Version ${{ steps.publish_mono.outputs.version }} published"
+            exit 0
+          fi
+      - name: Check mono-1-type Publish
+        continue-on-error: true
+        run: |
+          if [[ !steps.publish_mono_type.outputs.value ]]; then
+            echo "Publication error. Did you changed package.json version? Please review and try again."
+            exit 1
+          else
+            echo "Version ${{ steps.publish_mono_type.outputs.version }} published"
+            exit 0
+          fi
