@@ -46,7 +46,7 @@ jobs:
       steps:
         - run: echo ${{ needs.publish.outputs.mono_A }}
     check-mono-b:
-      name: Test A
+      name: Test b
       runs-on: ubuntu-latest
       needs: [ publish ]
       steps:
