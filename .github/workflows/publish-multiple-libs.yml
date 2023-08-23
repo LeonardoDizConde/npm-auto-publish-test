@@ -45,14 +45,14 @@ jobs:
             title="No changes has been detected"
             echo "::error title=$title::Did you changed package.json version?"
             title="A new release was made in app-b"
-            echo "::warning title=$title::The new version {{ steps.publish_mono_type.outputs.version }} was published"
+            echo "::warning title=$title::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
           elif [[ !steps.publish_mono_type.outputs.value ]]; then
             title="No changes has been detected"
             echo "::error title=$title::Did you changed package.json version?"
             title="A new release was made in app-a"
-            echo "::warning title=$title::The new version {{ steps.publish_mono.outputs.version }} was published"
+            echo "::warning title=$title::The new version ${{ steps.publish_mono.outputs.version }} was published"
           else
-            echo "::warning title=${"A new release was made in app-a"}::The new version {{ steps.publish_mono.outputs.version }} was published"
-            echo "::warning title=${"A new release was made in app-b"}::The new version {{ steps.publish_mono_type.outputs.version }} was published"
+            echo "::warning title=${"A new release was made in app-a"}::The new version ${{ steps.publish_mono.outputs.version }} was published"
+            echo "::warning title=${"A new release was made in app-b"}::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
           fi
           exit 0
