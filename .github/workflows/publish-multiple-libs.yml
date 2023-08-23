@@ -41,12 +41,12 @@ jobs:
             title="NPM release error"
             echo "::error title=$title::Both packages failed to publish. Did you changed package.json version? Please review and try again."
             exit 1
-          elif [[!steps.publish_mono.outputs.value]]; then
+          elif [ [ !steps.publish_mono.outputs.value ] ]; then
             title="No changes has been detected"
             echo "::error title=$title::Did you changed package.json version?"
             title="A new release was made in app-b"
             echo "::warning title=$title::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
-          elif [[!steps.publish_mono.outputs.value]]; then
+          elif [ [ !steps.publish_mono.outputs.value ] ]; then
             title="No changes has been detected"
             echo "::error title=$title::Did you changed package.json version?"
             title="A new release was made in app-a"
