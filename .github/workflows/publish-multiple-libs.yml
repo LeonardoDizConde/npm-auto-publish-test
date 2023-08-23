@@ -37,36 +37,17 @@ jobs:
           package: ./packages/npm-auto-publish-test-mono-repo-2
       - name: Set output vars
         run: |
-          echo "MONO_A={{ steps.publish_mono.outputs.value }}" >> "$GITHUB_OUTPUT"
-          echo "MONO_B={{ steps.publish_mono_type.outputs.value }}" >> "$GITHUB_OUTPUT"
-  check-mono:
-    name: Test A
-    runs-on: ubuntu-latest
-    needs: [ publish ]
-    steps:
-      - name: publico
-        run: |
-          echo "${{ needs.publish.outputs.MONO_A }}"
-          if [[ !needs.publish.outputs.MONO_A ]]; then
-            echo "Publication Error: Both packages failed to publish. Did you changed package.json version? Please review and try again."
+          if [[ !steps.publish_mono.outputs.value && !steps.publish_mono_type.outputs.value ]]; then
+            ::error title="Publish Error"::"Both packages failed to publish. Did you changed package.json version? Please review and try again."
             exit 1
+          elif [[ !steps.publish_mono.outputs.value ]]; then
+            echo "::error file=${"./packages/app-a/package.json"},line=${3},title=${"No changes has been detected"}::Did you changed package.json version?"
+            echo "::warning title=${"A new release was made in app-b"}::The new version {{ steps.publish_mono_type.outputs.version }} was published"
+          elif [[ !steps.publish_mono_type.outputs.value ]]; then
+            echo "::error file=${"./packages/app-b/package.json"},line=${3},title=${"No changes has been detected"}::Did you changed package.json version?"
+            echo "::warning title=${"A new release was made in app-a"}::The new version {{ steps.publish_mono.outputs.version }} was published"
           else
-            echo "Version A published"
-            exit 0
+            echo "::warning title=${"A new release was made in app-a"}::The new version {{ steps.publish_mono.outputs.version }} was published"
+            echo "::warning title=${"A new release was made in app-b"}::The new version {{ steps.publish_mono_type.outputs.version }} was published"
           fi
-
-  check-mono-b:
-    name: Test b
-    runs-on: ubuntu-latest
-    needs: [ publish ]
-    steps:
-      - name: publico
-        run: |
-          echo "${{ needs.publish.outputs.MONO_B }}"
-          if [[ !needs.publish.outputs.MONO_B ]]; then
-            echo "Publication Error: Both packages failed to publish. Did you changed package.json version? Please review and try again."
-            exit 1
-          else
-            echo "Version A published"
-            exit 0
-          fi
+          exit 0
