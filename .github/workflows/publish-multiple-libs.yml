@@ -1,9 +1,6 @@
 name: Publish NPM
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 env:
   NODE_VERSION: 16.x
