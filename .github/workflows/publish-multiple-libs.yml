@@ -39,15 +39,15 @@ jobs:
         run: |
           echo "::set-output name=mono_A::{!!steps.publish_mono.outputs.value}"
           echo "::set-output name=mono_B::{!!steps.publish_mono_type.outputs.value}"
-    check-mono:
-      name: Test A
-      runs-on: ubuntu-latest
-      needs: [ publish ]
-      steps:
-        - run: echo ${{ needs.publish.outputs.mono_A }}
-    check-mono-b:
-      name: Test b
-      runs-on: ubuntu-latest
-      needs: [ publish ]
-      steps:
-        - run: echo ${{ needs.publish.outputs.mono_B }}
+  check-mono:
+    name: Test A
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - run: echo ${{ needs.publish.outputs.mono_A }}
+  check-mono-b:
+    name: Test b
+    runs-on: ubuntu-latest
+    needs: [ publish ]
+    steps:
+      - run: echo ${{ needs.publish.outputs.mono_B }}
