@@ -37,16 +37,18 @@ jobs:
           package: ./packages/npm-auto-publish-test-mono-repo-2
       - name: Set output vars
         run: |
-          if [[ ! "${{ steps.publish_mono.outputs.value }}" ]] && [[ ! "${{ steps.publish_mono_type.outputs.value }}" ]]; then
+          hasPublishedA="${{ steps.publish_mono.outputs.value }}"
+          hasPublishedB="${{ steps.publish_mono_type.outputs.value }}"
+          if [[ ! "${{ hasPublishedA }}" ]] && [[ ! "${{ hasPublishedB }}" ]]; then
             title="NPM release error"
             echo "::error title=$title::Both packages failed to publish. Did you change the package.json version? Please review and try again."
             exit 1
-          elif [[ ! "${{ steps.publish_mono.outputs.value }}" ]]; then
+          elif [[ ! "${{ hasPublishedA }}" ]]; then
             title="No changes have been detected"
             echo "::error title=$title::Did you change the package.json version?"
             title="A new release was made in app-b"
             echo "::warning title=$title::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
-          elif [[ ! "${{ steps.publish_mono_type.outputs.value }}" ]]; then
+          elif [[ ! "${{ hasPublishedB }}" ]]; then
             title="No changes have been detected"
             echo "::error title=$title::Did you change the package.json version?"
             title="A new release was made in app-a"
