@@ -37,8 +37,8 @@ jobs:
           package: ./packages/npm-auto-publish-test-mono-repo-2
       - name: Set output vars
         run: |
-          hasPublishedA="${{ steps.publish_mono.outputs.value }}"
-          hasPublishedB="${{ steps.publish_mono_type.outputs.value }}"
+          hasPublishedA="${{ steps.publish_mono.outputs.type }}"
+          hasPublishedB="${{ steps.publish_mono_type.outputs.type }}"
           
           echo "$hasPublishedA"
           echo "$hasPublishedB"
