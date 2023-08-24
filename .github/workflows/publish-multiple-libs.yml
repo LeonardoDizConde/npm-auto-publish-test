@@ -37,26 +37,25 @@ jobs:
           package: ./packages/npm-auto-publish-test-mono-repo-2
       - name: Set output vars
         run: |
+          # Get the values from workflow outputs
           hasPublishedA="${{ steps.publish_mono.outputs.type }}"
           hasPublishedB="${{ steps.publish_mono_type.outputs.type }}"
-          
-          echo "$hasPublishedA"
-          echo "$hasPublishedB"
-          
-          if [ ! "$hasPublishedA" ] && [ ! "$hasPublishedB" ]; then
-            title="NPM release error"
-            echo "::error title=$title::Both packages failed to publish. Did you change the package.json version? Please review and try again."
+        
+          # Check whether either package has been published
+          if [[ ! "$hasPublishedA" && ! "$hasPublishedB" ]]; then
+            echo "::error ::NPM release error: Both packages failed to publish. Please review the package.json version and try again."
             exit 1
           elif [[ ! "$hasPublishedA" ]]; then
-            title="No changes have been detected"
-            echo "::error title=$title::Did you change the package.json version?"
-            echo "::warning title='A new release was made in app-b'::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
+            # Package A failed to publish
+            echo "::error ::No changes have been detected in package A. Please check the package.json version."
+            echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
           elif [[ ! "$hasPublishedB" ]]; then
-            title="No changes have been detected"
-            echo "::error title=$title::Did you change the package.json version?"
-            echo "::warning title='A new release was made in app-a'::The new version ${{ steps.publish_mono.outputs.version }} was published"
+            # Package B failed to publish
+            echo "::error ::No changes have been detected in package B. Please check the package.json version."
+            echo "::warning ::A new release was made in app-a. The new version ${{ steps.publish_mono.outputs.version }} was published."
           else
-            echo "::warning title='A new release was made in app-a'::The new version ${{ steps.publish_mono.outputs.version }} was published"
-            echo "::warning title='A new release was made in app-b'::The new version ${{ steps.publish_mono_type.outputs.version }} was published"
+            # Both packages were published successfully
+            echo "::warning ::A new release was made in app-a. The new version ${{ steps.publish_mono.outputs.version }} was published."
+            echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
           fi
           exit 0
