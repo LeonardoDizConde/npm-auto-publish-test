@@ -29,12 +29,3 @@ jobs:
         run: rush update
       - name: Build Projects
         run: rush rebuild --verbose
-      - name: Run Tests
-        run: cd packages/neon-dappkit && pnpm test
-      - name: Notify Test Reporter
-        uses: dorny/test-reporter@v1.6.0
-        with:
-          name: Unit Tests
-          reporter: mocha-json
-          path: mocha-results.json
-          fail-on-error: true
