@@ -35,6 +35,14 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/npm-auto-publish-test-mono-repo-2
+      - name: Update version
+        run: rush version --bump
+      - name: git add
+        run: git add .
+      - name: git commit
+        run: git commit -m "update package.json"
+      - name: git push
+        run: git push
       - name: Set output vars
         run: |
           # Get the values from workflow outputs
@@ -59,11 +67,3 @@ jobs:
             echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
           fi
           exit 0
-      - name: Update version
-        run: rush version --bump
-      - name: git add
-        run: git add .
-      - name: git commit
-        run: git commit -m "update package.json"
-      - name: git push
-        run: git push
