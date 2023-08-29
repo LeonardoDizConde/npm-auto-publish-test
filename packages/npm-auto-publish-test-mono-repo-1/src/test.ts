@@ -3,6 +3,17 @@ class Animal {
 
   displayInfo(): void {
     console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
+    console.log(`This is ${this.name}, ${this.age} years old.`);
   }
 }
 
