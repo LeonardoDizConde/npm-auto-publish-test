@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "npx nodemon",
-    "build": "rimraf ./build && tsc"
+    "build": "tsc ./src/updatePackage.ts && node ./src/updatePackage.js && rimraf ./build && tsc"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@microsoft/rush-lib": "^5.102.0",
     "@types/node": "^20.5.0",
+    "lodash": "^4.17.21",
     "nodemon": "^3.0.1",
     "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
