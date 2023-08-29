@@ -10,6 +10,8 @@ jobs:
     name: publish
     runs-on: ubuntu-latest
     environment: development
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,6 +26,10 @@ jobs:
           git config --global user.name ${{ secrets.USERNAME }}
       - name: install rush
         run: npm install -g @microsoft/rush
+      - name: Verify Change Logs
+        run: rush change --verify
+      - name: Update package.json version
+        run: rush version --bump
       - name: Install dependencies
         run: rush update
       - name: rush Build
@@ -40,15 +46,7 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/npm-auto-publish-test-mono-repo-2
-      - name: Update version
-        run: rush version --bump
-      - name: git add
-        run: git add .
-      - name: git commit
-        run: git commit -m "update package.json"
-      - name: git push
-        run: git push
-      - name: Set output vars
+      - name: Notification Alert
         run: |
           # Get the values from workflow outputs
           hasPublishedA="${{ steps.publish_mono.outputs.type }}"
@@ -72,3 +70,8 @@ jobs:
             echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
           fi
           exit 0
+      - name: Commit and Push package.json version update
+        run: |
+          git add .
+          git commit -m "Update package.json version"
+          git push

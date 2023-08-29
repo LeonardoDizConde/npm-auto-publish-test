@@ -1,0 +1,17 @@
+{
+  "name": "npm-auto-publish-test-mono-repo-2",
+  "entries": [
+    {
+      "version": "2.1.0",
+      "tag": "npm-auto-publish-test-mono-repo-2_v2.1.0",
+      "date": "Tue, 29 Aug 2023 16:08:50 GMT",
+      "comments": {
+        "minor": [
+          {
+            "comment": "remover coisas desnecessarias"
+          }
+        ]
+      }
+    }
+  ]
+}
