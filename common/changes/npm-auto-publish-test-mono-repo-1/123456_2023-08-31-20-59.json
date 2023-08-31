@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "npm-auto-publish-test-mono-repo-1",
+      "comment": "999999",
+      "type": "minor"
+    }
+  ],
+  "packageName": "npm-auto-publish-test-mono-repo-1"
+}
