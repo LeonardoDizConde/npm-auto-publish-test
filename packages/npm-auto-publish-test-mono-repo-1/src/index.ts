@@ -10,6 +10,20 @@ function generateRandomCode(length: number): string {
     name: 'aaaaa',
     age: 5
   } as Animal
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
+  animal.displayInfo()
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let randomCode = '';
   for (let i = 0; i < length; i++) {
