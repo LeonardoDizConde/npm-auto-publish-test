@@ -25,7 +25,7 @@ jobs:
           git config --global user.name ${{ secrets.USERNAME }}
       - name: Check Git Secrets
         run: |
-          if [ -z $"{{ secrets.EMAIL }}" ] || [ -z $"{{ secrets.AUTO_PUSH_NAME }}" ]; then
+          if [ -z "${{ secrets.EMAIL }}" ] || [ -z "${{ secrets.AUTO_PUSH_NAME }}" ]; then
             echo "Secrets not defined"
             exit 1
           fi
