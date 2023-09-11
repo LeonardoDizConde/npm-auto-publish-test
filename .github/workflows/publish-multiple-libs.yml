@@ -19,12 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-
-      - name: Git login
-        run: |
-          git config --global user.email ${{ secrets.EMAIL }}
-          git config --global user.name ${{ secrets.USERNAME }}
-      - name: install rush
+      - name: Install Rush
         run: npm install -g @microsoft/rush
       - name: Verify Change Logs
         run: rush change --verify
@@ -34,42 +29,8 @@ jobs:
         run: rush update
       - name: rush Build
         run: rush rebuild
-      - name: Publishing mono repo 1
-        uses: JS-DevTools/npm-publish@v2
-        id: publish_mono
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/npm-auto-publish-test-mono-repo-1
-      - name: Publishing mono repo 2
-        uses: JS-DevTools/npm-publish@v2
-        id: publish_mono_type
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          package: ./packages/npm-auto-publish-test-mono-repo-2
-      - name: Notification Alert
-        run: |
-          # Get the values from workflow outputs
-          hasPublishedA="${{ steps.publish_mono.outputs.type }}"
-          hasPublishedB="${{ steps.publish_mono_type.outputs.type }}"
-        
-          # Check whether either package has been published
-          if [[ ! "$hasPublishedA" && ! "$hasPublishedB" ]]; then
-            echo "::error ::NPM release error: Both packages failed to publish. Please review the package.json version and try again."
-            exit 1
-          elif [[ ! "$hasPublishedA" ]]; then
-            # Package A failed to publish
-            echo "::error ::No changes have been detected in package A. Please check the package.json version."
-            echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
-          elif [[ ! "$hasPublishedB" ]]; then
-            # Package B failed to publish
-            echo "::error ::No changes have been detected in package B. Please check the package.json version."
-            echo "::warning ::A new release was made in app-a. The new version ${{ steps.publish_mono.outputs.version }} was published."
-          else
-            # Both packages were published successfully
-            echo "::warning ::A new release was made in app-a. The new version ${{ steps.publish_mono.outputs.version }} was published."
-            echo "::warning ::A new release was made in app-b. The new version ${{ steps.publish_mono_type.outputs.version }} was published."
-          fi
-          exit 0
+      - name: Rush Publish
+        run: rush publish --apply --target-branch main --publish --npm-auth-token ${{ secrets.NPM_TOKEN }} --add-commit-details --include-all
       - name: Commit and Push package.json version update
         run: |
           git add .
