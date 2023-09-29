@@ -12,14 +12,14 @@
     "preRushInstall": [],
     "postRushInstall": [],
     "preRushBuild": [],
-    "postRushBuild": []
+    "postRushBuild": [],
   },
   "variants": [],
   "projects": [
     {
       "packageName": "npm-auto-publish-test-mono-repo-1",
       "projectFolder": "packages/npm-auto-publish-test-mono-repo-1",
-      "shouldPublish": true
+      "shouldPublish": true,
     },
     {
       "packageName": "npm-auto-publish-test-mono-repo-2",
