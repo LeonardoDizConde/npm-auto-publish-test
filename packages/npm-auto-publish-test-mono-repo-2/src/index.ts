@@ -1,20 +1,16 @@
-import { Animal } from "./test"
+/**
+ * Meu objeto X
+ */
+export type MyObject = {
+  name: string;
+  age: number;
+};
 
-
-function generateRandomCode(length: number): string {
-  const animal = {
-    name: 'aaaaa',
-    age: 5
-  } as Animal
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let randomCode = '';
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor((Math.random() * characters.length) % animal.age);
-    randomCode += characters.charAt(randomIndex);
-  }
-  return randomCode;
+/**
+ * Uma função que definitivamente faz algo
+ * @param algo é definitvamente algo
+ * @param algo2 é definitvamente algo2
+ */
+function myFunction(algo: boolean, algo2: string): void {
+  // This function doesn't return a value
 }
-
-const codeLength = 10;
-const randomCode = generateRandomCode(codeLength);
-console.log(`Random code: ${randomCode}`);
